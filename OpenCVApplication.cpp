@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "common.h"
+#include "Descriptors.h"
 #include <opencv2/core/utils/logger.hpp>
 #include "Classifier.h"
 

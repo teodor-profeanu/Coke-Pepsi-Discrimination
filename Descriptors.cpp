@@ -1,6 +1,6 @@
-#include "Descriptors.h"
 #include "stdafx.h"
-#include "common.h"
+
+#include "Descriptors.h"
 
 void showHistogram(const std::string& name, int* hist, const int  hist_cols, const int hist_height)
 {

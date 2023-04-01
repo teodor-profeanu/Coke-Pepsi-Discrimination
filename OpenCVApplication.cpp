@@ -75,8 +75,6 @@ int main()
 {
 	cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_FATAL);
     projectPath = _wgetcwd(0, 0);
-
-<<<<<<< HEAD
 	//testBGR2HSV();
 	char fname[MAX_PATH];
 	while (openFileDlg(fname))
@@ -85,7 +83,6 @@ int main()
 		src = imread(fname);
 		std::cout<<hueDescriptor(src);
 	}
-=======
 	//Mat src;
 	//src = imread(folderFileJpg("Images",1));
 	//imshow("image", src);
@@ -93,7 +90,6 @@ int main()
 
 	train("images/train/cola", "trained_set.txt", 30, 199, COLA, size);
 	train("images/train/pepsi", "trained_set.txt", 30, 199, PEPSI, size, true);
->>>>>>> 29c3c052ccd2a97b5aa35ca46aee79851a290d31
 
 	return 0;
 }

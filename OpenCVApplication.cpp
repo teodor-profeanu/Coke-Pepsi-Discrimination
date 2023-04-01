@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "common.h"
 #include <opencv2/core/utils/logger.hpp>
+#include "Classifier.h"
 
 wchar_t* projectPath;
 
@@ -74,7 +75,13 @@ int main()
 	cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_FATAL);
     projectPath = _wgetcwd(0, 0);
 
-	testBGR2HSV();
+	//Mat src;
+	//src = imread(folderFileJpg("Images",1));
+	//imshow("image", src);
+	//waitKey();
+
+	train("images/train/cola", "trained_set.txt", 30, 199, COLA, size);
+	train("images/train/pepsi", "trained_set.txt", 30, 199, PEPSI, size, true);
 
 	return 0;
 }

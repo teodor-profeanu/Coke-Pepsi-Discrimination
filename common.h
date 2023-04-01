@@ -37,4 +37,4 @@ int openFolderDlg(char* folderName);
 
 void resizeImg(Mat src, Mat &dst, int maxSize, bool interpolate);
 
-#endif
+#endif;

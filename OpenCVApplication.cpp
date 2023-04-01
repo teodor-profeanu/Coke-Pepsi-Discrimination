@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "common.h"
+#include "Descriptors.h"
 #include <opencv2/core/utils/logger.hpp>
 
 wchar_t* projectPath;
@@ -74,7 +75,14 @@ int main()
 	cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_FATAL);
     projectPath = _wgetcwd(0, 0);
 
-	testBGR2HSV();
+	//testBGR2HSV();
+	char fname[MAX_PATH];
+	while (openFileDlg(fname))
+	{
+		Mat src;
+		src = imread(fname);
+		std::cout<<hueDescriptor(src);
+	}
 
 	return 0;
 }

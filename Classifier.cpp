@@ -4,11 +4,11 @@
 
 #define folderFileJpg(x,y) (std::string(x) + "/" + std::to_string(y) + ".jpg").c_str()
 
-int size(Mat matrix) {
+int size(const Mat &matrix) {
 	return matrix.cols * matrix.rows;
 }
 
-void train(const char* folderName, const char* dstName, int rangeStart, int rangeEnd, char tag, Vec2f (*func)(Mat), bool append) {
+void train(const char* folderName, const char* dstName, int rangeStart, int rangeEnd, char tag, Vec2f (*func)(const Mat&), bool append) {
 	std::ofstream output;
 	if(append)
 		output = std::ofstream("trained_set.txt", std::ios_base::app);
@@ -68,11 +68,11 @@ char knn(std::vector<Tagged> tags, Vec2f point, int sampleSize) {
 	return finalTag;
 }
 
-char classify(std::vector<Tagged> tags, Mat src, Vec2f(*func)(Mat), int sampleSize) {
+char classify(std::vector<Tagged> tags, const Mat& src, Vec2f(*func)(const Mat&), int sampleSize) {
 	return knn(tags, func(src), sampleSize);
 }
 
-void classifyDemo(const char* trainedSet, Vec2f (*func)(Mat), int sampleSize) {
+void classifyDemo(const char* trainedSet, Vec2f (*func)(const Mat&), int sampleSize) {
 	char fname[MAX_PATH];
 	std::vector<Tagged> tags = readTaggedSet(trainedSet);
 	while (openFileDlg(fname)){
@@ -92,7 +92,7 @@ void classifyDemo(const char* trainedSet, Vec2f (*func)(Mat), int sampleSize) {
 	}
 }
 
-void testBatch(const char* trainedSet, Vec2f(*func)(Mat), int sampleSize, const char* testDir, int rangeStart, int rangeEnd, char expected) {
+void testBatch(const char* trainedSet, Vec2f(*func)(const Mat&), int sampleSize, const char* testDir, int rangeStart, int rangeEnd, char expected) {
 	std::cout << "\n------------------------\n";
 	if (expected == PEPSI)
 		std::cout << "Testing for PEPSI";

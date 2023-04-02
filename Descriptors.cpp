@@ -24,7 +24,7 @@ void showHistogram(const std::string& name, int* hist, const int  hist_cols, con
 	imshow(name, imgHist);
 }
 
-Mat_<Vec3b> convertBGR2HSV(Mat src)
+Mat_<Vec3b> convertBGR2HSV(const Mat &src)
 {
 	int height = src.rows;
 	int width = src.cols;
@@ -48,7 +48,7 @@ Mat_<Vec3b> convertBGR2HSV(Mat src)
 	return hsvImg;
 }
 
-std::vector<int> hirtogramFromHSV(Mat src) {
+std::vector<int> hirtogramFromHSV(const Mat &src) {
 	std::vector<int> histogram(180, 0);
 	Mat_<Vec3b> hImage = convertBGR2HSV(src);
 	int rows = hImage.rows;
@@ -65,7 +65,7 @@ std::vector<int> hirtogramFromHSV(Mat src) {
 	waitKey(0);
 }
 
-Vec2f hueDescriptor(Mat src) {
+Vec2f hueDescriptor(const Mat &src) {
 	std::vector<int> histogram(180, 0);
 	histogram = hirtogramFromHSV(src);
 	int samples = 0;

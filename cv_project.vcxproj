@@ -81,6 +81,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>OpenCV/Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

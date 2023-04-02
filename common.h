@@ -16,6 +16,15 @@ using namespace cv;
 #define min_(x,y) ((x) < (y) ? (x) : (y))
 #define isNan(x) ((x) != (x) ? 1 : 0)
 
+struct Tagged {
+	Tagged(char tag, Vec2f point) {
+		this->point = point;
+		this->tag = tag;
+	}
+	Vec2f point;
+	char tag;
+};
+
 class FileGetter{
 	WIN32_FIND_DATAA found;	
 	HANDLE hfind;
@@ -36,5 +45,11 @@ int openFileDlg(char* fname);
 int openFolderDlg(char* folderName);
 
 void resizeImg(Mat src, Mat &dst, int maxSize, bool interpolate);
+
+float distance(Vec2f point1, Vec2f point2);
+
+Vec2f normalizeFromAngle(float angle);
+
+void normalize(Vec2f &point);
 
 #endif;

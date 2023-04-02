@@ -8,7 +8,7 @@ int size(Mat matrix) {
 	return matrix.cols * matrix.rows;
 }
 
-void train(const char* folderName, const char* dstName, int rangeStart, int rangeEnd, char tag, int (*func)(Mat), bool append = false) {
+void train(const char* folderName, const char* dstName, int rangeStart, int rangeEnd, char tag, Vec2f (*func)(Mat), bool append) {
 	std::ofstream output;
 	if(append)
 		output = std::ofstream("trained_set.txt", std::ios_base::app);
@@ -17,8 +17,8 @@ void train(const char* folderName, const char* dstName, int rangeStart, int rang
 
 	for (int i = rangeStart; i <= rangeEnd; i++) {
 		Mat src = imread(folderFileJpg(folderName, i));
-		int value = func(src);
-		output << tag << " " << value << "\n";
+		Vec2f point = func(src);
+		output << tag << " " << point[0] << " " << point[1] << "\n";
 	}
 	output.close();
 }
@@ -27,11 +27,11 @@ std::vector<Tagged> readTaggedSet(const char* fileName) {
 	std::ifstream input(fileName);
 	std::vector<Tagged> tags;
 
-	int value;
+	float pointX, pointY;
 	char tag;
 
-	while (input >> tag >> value) {
-		tags.push_back(Tagged(tag, value));
+	while (input >> tag >> pointX >> pointY) {
+		tags.push_back(Tagged(tag, Vec2f(pointX, pointY)));
 	}
 
 	input.close();
@@ -39,14 +39,15 @@ std::vector<Tagged> readTaggedSet(const char* fileName) {
 	return tags;
 }
 
-char knn(std::vector<Tagged> tags, int value, int sampleSize) {
+char knn(std::vector<Tagged> tags, Vec2f point, int sampleSize) {
 	char freq[27] = {'\0'};
 	for (int i = 0; i < sampleSize; i++) {
-		int minDistance = INT_MAX;
+		float minDst = 1000.0;
 		int foundIndex = 0;
 		for (int j = 0; j < tags.size(); j++) {
-			if (abs(value - tags.at(j).value) < minDistance) {
-				minDistance = abs(value - tags.at(j).value);
+			float dst = distance(tags.at(j).point, point);
+			if (dst < minDst) {
+				minDst = dst;
 				foundIndex = j;
 			}
 		}
@@ -67,15 +68,20 @@ char knn(std::vector<Tagged> tags, int value, int sampleSize) {
 	return finalTag;
 }
 
-void classify(const char* trainedSet, int (*func)(Mat), int sampleSize) {
+char classify(std::vector<Tagged> tags, Mat src, Vec2f(*func)(Mat), int sampleSize) {
+	return knn(tags, func(src), sampleSize);
+}
+
+void classifyDemo(const char* trainedSet, Vec2f (*func)(Mat), int sampleSize) {
 	char fname[MAX_PATH];
+	std::vector<Tagged> tags = readTaggedSet(trainedSet);
 	while (openFileDlg(fname)){
 		Mat src = imread(fname);
 
-		char result = knn(readTaggedSet(trainedSet), func(src), sampleSize);
-		if (result == 'c')
+		char result = classify(tags, src, func, sampleSize);
+		if (result == COLA)
 			std::cout << "Coca Cola";
-		else if(result == 'p')
+		else if(result == PEPSI)
 			std::cout << "Pepsi";
 		else
 			std::cout << "Other";
@@ -84,4 +90,29 @@ void classify(const char* trainedSet, int (*func)(Mat), int sampleSize) {
 		imshow("image", src);
 		waitKey();
 	}
+}
+
+void testBatch(const char* trainedSet, Vec2f(*func)(Mat), int sampleSize, const char* testDir, int rangeStart, int rangeEnd, char expected) {
+	std::cout << "\n------------------------\n";
+	if (expected == PEPSI)
+		std::cout << "Testing for PEPSI";
+	if (expected == COLA)
+		std::cout << "Testing for COLA";
+	std::cout << "\n------------------------\n";
+
+	std::vector<Tagged> tags = readTaggedSet(trainedSet);
+	int positive = 0, negative = 0;
+
+	for (int i = rangeStart; i <= rangeEnd; i++) {
+		Mat src = imread(folderFileJpg(testDir, i));
+		char result = classify(tags, src, func, sampleSize);
+		if (result == expected)
+			positive++;
+		else
+			negative++;
+	}
+
+	std::cout << "Positive results: " << positive << "\n";
+	std::cout << "Negative results: " << negative << "\n";
+	std::cout << "Success rate: " << ((float)positive / (positive + negative))*100 << "%\n\n";
 }

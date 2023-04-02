@@ -1,6 +1,3 @@
-// OpenCVApplication.cpp : Defines the entry point for the console application.
-//
-
 #include "stdafx.h"
 #include "common.h"
 #include "Descriptors.h"
@@ -9,7 +6,6 @@
 #include "Descriptors.h"
 #include <filesystem>
 
-//wchar_t* projectPath;
 
 int main() 
 {
@@ -17,14 +13,11 @@ int main()
 
 	//train("images/train/cola", "trained_set.txt", 30, 199, COLA, hueDescriptor);
 	//train("images/train/pepsi", "trained_set.txt", 30, 199, PEPSI, hueDescriptor, true);
-	//std::vector<Tagged> tags = readTaggedSet("trained_set.txt");
-	//for (int i = 0; i < tags.size(); i++) {
-	//	std::cout << tags.at(i).tag << " " << tags.at(i).point << "\n";
-	//}
 
-	//classifyDemo("trained_set.txt", hueDescriptor, 7);
-	testBatch("trained_set.txt", hueDescriptor, 7, "images/test/cola", 0, 29, COLA);
-	testBatch("trained_set.txt", hueDescriptor, 7, "images/test/pepsi", 0, 29, PEPSI);
+	classifyDemo("trained_set.txt", hueDescriptor, 7);
+
+	//testBatch("trained_set.txt", hueDescriptor, 7, "images/test/cola", 0, 29, COLA);
+	//testBatch("trained_set.txt", hueDescriptor, 7, "images/test/pepsi", 0, 29, PEPSI);
 
 	return 0;
 }

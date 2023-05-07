@@ -65,20 +65,20 @@ std::vector<int> hirtogramFromHSV(const Mat &src) {
 	waitKey(0);
 }
 
-Vec2f hueDescriptor(const Mat &src) {
+std::vector<float> hueDescriptor(const Mat &src) {
 	std::vector<int> histogram(180, 0);
 	histogram = hirtogramFromHSV(src);
 	int samples = 0;
-	Vec2f sum(0.0f,0.0f);
+	std::vector<float> sum(2);
 	for (int i = 0; i < 180; i++) {
 		//sumaProduse += i * histogram[i];
-		Vec2f point = normalizeFromAngle(i * 2);
-		sum[0] += histogram[i] * point[0];
-		sum[1] += histogram[i] * point[1];
+		std::vector<float>  point = normalizeFromAngle(i * 2);
+		sum.at(0) += histogram[i] * point.at(0);
+		sum.at(1) += histogram[i] * point.at(1);
 		samples += histogram[i];
 	}
-	sum[0] /= samples;
-	sum[1] /= samples;
+	sum.at(0) /= samples;
+	sum.at(1) /= samples;
 
 	normalize(sum);
 

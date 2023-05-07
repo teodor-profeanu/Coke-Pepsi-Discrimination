@@ -16,12 +16,12 @@ using namespace cv;
 #define min_(x,y) ((x) < (y) ? (x) : (y))
 #define isNan(x) ((x) != (x) ? 1 : 0)
 
-struct Tagged {
-	Tagged(char tag, Vec2f point) {
-		this->point = point;
+struct ClassifiedPoint {
+	ClassifiedPoint(char tag, std::vector<float> point) {
+		this->point = std::vector<float>(point);
 		this->tag = tag;
 	}
-	Vec2f point;
+	std::vector<float> point;
 	char tag;
 };
 
@@ -46,10 +46,10 @@ int openFolderDlg(char* folderName);
 
 void resizeImg(Mat src, Mat &dst, int maxSize, bool interpolate);
 
-float distance(Vec2f point1, Vec2f point2);
+float distance(std::vector<float> point1, std::vector<float> point2);
 
-Vec2f normalizeFromAngle(float angle);
+std::vector<float>  normalizeFromAngle(float angle);
 
-void normalize(Vec2f &point);
+void normalize(std::vector<float>& point);
 
 #endif;

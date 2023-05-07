@@ -24,7 +24,7 @@ void showHistogram(const std::string& name, int* hist, const int  hist_cols, con
 	imshow(name, imgHist);
 }
 
-Mat_<uchar> convertBGR2HSV(Mat src)
+Mat_<Vec3b> convertBGR2HSV(const Mat &src)
 {
 	int height = src.rows;
 	int width = src.cols;
@@ -35,45 +35,53 @@ Mat_<uchar> convertBGR2HSV(Mat src)
 	Mat_<Vec3b> hsvImg;
 	cvtColor(src, hsvImg, COLOR_BGR2HSV);
 
-	for (int i = 0; i < height; i++)
-	{
-		for (int j = 0; j < width; j++)
-		{
+	//for (int i = 0; i < height; i++)
+	//{
+	//	for (int j = 0; j < width; j++)
+	//	{
 
-			h(i, j) = hsvImg(i, j)[0];
-		}
-	}
+	//		h(i, j) = hsvImg(i, j)[0];
+	//	}
+	//}
 
-	return h;
+	//imshow("hue", h);
+	return hsvImg;
 }
 
-std::vector<int> hirtogramFromHSV(Mat src) {
+std::vector<int> hirtogramFromHSV(const Mat &src) {
 	std::vector<int> histogram(180, 0);
-	Mat_<uchar> hImage = convertBGR2HSV(src);
+	Mat_<Vec3b> hImage = convertBGR2HSV(src);
 	int rows = hImage.rows;
 	int cols = hImage.cols;
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			histogram[hImage(i, j)]++;
+			if(hImage(i, j)[1]>100)
+				histogram[hImage(i, j)[0]]++;
 		}
 	}
 	
-	showHistogram("Histograma", &histogram[0], 180, 180);
+	//showHistogram("Histograma", &histogram[0], 180, 180);
 	return histogram;
 	waitKey(0);
 }
 
-int hueDescriptor(Mat src) {
+Vec2f hueDescriptor(const Mat &src) {
 	std::vector<int> histogram(180, 0);
 	histogram = hirtogramFromHSV(src);
-	int result;
-	int sumaProduse = 0, suma = 0;
+	int samples = 0;
+	Vec2f sum(0.0f,0.0f);
 	for (int i = 0; i < 180; i++) {
-		sumaProduse += i * histogram[i];
-		suma += histogram[i];
+		//sumaProduse += i * histogram[i];
+		Vec2f point = normalizeFromAngle(i * 2);
+		sum[0] += histogram[i] * point[0];
+		sum[1] += histogram[i] * point[1];
+		samples += histogram[i];
 	}
-	
-	result = sumaProduse / suma;
-	return result;
+	sum[0] /= samples;
+	sum[1] /= samples;
+
+	normalize(sum);
+
+	return sum;
 }
 

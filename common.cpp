@@ -104,3 +104,25 @@ void resizeImg(Mat src, Mat &dst, int maxSize, bool interpolate)
 	else
 		resize(src,dst,sz,0,0,INTER_NEAREST);
 }
+
+float distance(Vec2f point1, Vec2f point2) {
+	float difX = point1[0] - point2[0];
+	float difY = point1[1] - point2[1];
+
+	return sqrt(difX * difX + difY * difY);
+}
+
+Vec2f normalizeFromAngle(float angle) {
+	angle = angle/360*2*PI;
+	Vec2f point;
+	point[0] = cos(angle);
+	point[1] = sin(angle);
+	normalize(point);
+	return point;
+}
+
+void normalize(Vec2f& point) {
+	float length = sqrt(point[0] * point[0] + point[1] * point[1]);
+	point[0] /= length;
+	point[1] /= length;
+}

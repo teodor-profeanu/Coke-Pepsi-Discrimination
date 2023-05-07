@@ -5,19 +5,19 @@
 
 #define COLA 'c'
 #define PEPSI 'p'
+#define TRAINED_FILE "trained_set.txt"
 
-struct Tagged {
-	Tagged(char tag, int value) {
-		this->value = value;
-		this->tag = tag;
-	}
-	int value;
-	char tag;
-};
+int size(const Mat &matrix);
+void train(const char* folderName, const char* dstName, int rangeStart, int rangeEnd, char tag, Vec2f (*func)(const Mat&), bool append = false);
 
-int size(Mat matrix);
-void train(const char* folderName, const char* dstName, int rangeStart, int rangeEnd, const char* tag, int (*func)(Mat), bool append = false);
 std::vector<Tagged> readTaggedSet(const char* fileName);
-void classify(const char* trainedSet, int (*func)(Mat), int sampleSize);
+
+char knn(std::vector<Tagged> tags, Vec2f point, int sampleSize);
+
+void classifyDemo(const char* trainedSet, Vec2f (*func)(const Mat&), int sampleSize);
+
+char classify(std::vector<Tagged> tags, const Mat &src, Vec2f(*func)(const Mat&), int sampleSize);
+
+void testBatch(const char* trainedSet, Vec2f(*func)(const Mat&), int sampleSize, const char* testDir, int rangeStart, int rangeEnd, char expected);
 
 #endif

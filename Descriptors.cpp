@@ -68,7 +68,6 @@ std::vector<int> hirtogramFromHSV(const Mat &src) {
 	for (int i = 0; i < histogram.size(); i++) {
 		g << i * _samplesPerBin << "," << histogram[i]<<"\n";
 	}
-
 	return histogram;
 	waitKey(0);
 }

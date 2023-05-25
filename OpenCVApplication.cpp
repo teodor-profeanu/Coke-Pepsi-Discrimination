@@ -12,8 +12,6 @@ int main()
 {
 	cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_FATAL);
 
-	//doesThisWork();
-
 	setDistanceFunc(euclidianDistance);
 	setSaturationThreshold(170);
 	setBins(60);

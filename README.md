@@ -57,5 +57,6 @@
 ![ImagineTestIntegrata](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/ImagineTestIntegrata.jpeg?raw=true)
 
 > Am dat zoom pe graficul rezultat înainte pentru a evidenția cele mai apropiate 17 puncte de noul punct adăugat (imaginea de test).
+
 ![Cele17Puncte](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/Cele17Puncte.jpeg?raw=true)
 

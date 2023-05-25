@@ -48,9 +48,11 @@ Totodată am observat că modificarea lui k nu are un impact atât de puternic p
 
 ### 3. Exemplificarea pașilor pe care îi face clasificatorul pentru un caz concret:
 Folosind cele mai bune valori rezultate din testele anterioare, vom prezenta toți pașii de clasificare a unei imagini. 
+
 ![PepsiImage](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/PepsiImage.jpeg?raw=true)
 
 Având pragul saturației de 170 și numărul de bin-uri de 60 histograma rezultată este următoarea:
+
 ![Histograma](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/Histograma.jpeg?raw=true)
 
 În continuare am arătat, pe graficul rezultat în urma antrenării cu cele mai bune valori găsite, unde este punctul ce reprezintă valoarea imaginii de test.

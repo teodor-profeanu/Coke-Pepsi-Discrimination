@@ -1,8 +1,12 @@
 ## **_Pepsi vs Cola -- discriminare_**
 Procesarea Imaginilor
+
 Studenți: Teodor Profeanu, Adela Tatar
+
 Facultatea: Automatică și Calculatoare
+
 Profesor îndrumător: Vicaș Cristian
+
 
 ### 1. Descrierea proiectului:
 Clasificarea, pe bază de histograma dupa culoare, a unor imagini cu sticle/doze de pepsi și cola în catedoria din care fac parte. 

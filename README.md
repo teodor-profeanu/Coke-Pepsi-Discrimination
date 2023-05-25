@@ -37,7 +37,7 @@ Luând în considerare rezultatele anterioare, am variat saturația între 0 și
 ##### Testări cu varieri multiple a tuturor parametrilor: 
 Ulterior pentru a afla o combinație de valori cât mai bună, am creat o funcție care pentru fiecare dintre cele două distanțe: euclidiană și cosinus, variază pragul saturației între 125 și 175 din 5 în 5, valoarea lui k de la 1 la 29, din doi în doi și valoarea bin-urilor între 5 și 90, din 5 în 5, rezultând 5940 de teste. 
 
-În urma acestora am obținut cel mai bun procent de 98.33% cu urmatoarele valori: Saturație = 170, K = 3, bins = 60 și distanța euclidiană, iar cel mai mic procent de 
+În urma acestora am obținut cel mai bun procent de 98.33% cu urmatoarele valori: Saturație = 170, K = 3, bins = 60 și distanța euclidiană, iar cel mai mic procent de 58.33% cu valorile: Saturație =0, K = 1, bins = 55 și distanța euclidiana.
 
 Totodată am observat că modificarea lui k nu are un impact atât de puternic precum modificarea bin-urilor, așa că în continuare nu vom mai pune atât de mult accent pe valoarea lui k. 
 

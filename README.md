@@ -30,7 +30,7 @@ Cele două grafice reprezintă rezultatele în urma antrenării pe setul de poze
 
 În continuare vom încerca să modificăm valorile care pot fi variate, astfel încât să obținem puncte cât mai grupate, iar performanța clasificatorului să fie cât mai mare.  
 
-### 2.2 Rezultate rată de succes în funcție de numărul de vecini: 
+### 2.2 Rata de succes în funcție de numărul de vecini: 
 
 ![Samples](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/VariationNoSamples.jpeg?raw=true)
 
@@ -38,13 +38,13 @@ Cele două grafice reprezintă rezultatele în urma antrenării pe setul de poze
 
 Se poate observa că, atât pentru cola cât și pentru pepsi, rata maximă de succes este atunci când valoarea lui k este 13. 
 
-### 2.3 Rezultate rată de succes în funcție de pragului de saturație: 
+### 2.3 Rata de succes în funcție de pragului de saturație: 
 
 ![Saturation](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/VariationSaturation.jpeg?raw=true)
 
 Luând în considerare rezultatele anterioare, am variat saturația între 0 și 175, păstrând k egal cu 13. Se poate observa că pentru imaginile cu cola valoarea saturației minime la care s-a obținut rata de succes maximă (100%) a fost la valorile mai mari de 140. Pentru pepsi, valoarea cea mai bună a saturației începe de la 80, urmând ca pentru restul valorilor să avem o rată de succes constantă (86.6%). Putem deduce că valorile aproape maxime ale saturației au rezultate mai bune.
 
-### 2.4 Rezultate rată de succes în funcție de dimensiunea unui bin: 
+### 2.4 Rata de succes în funcție de dimensiunea unui bin: 
 
 ![Bins](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/VariationBins.jpeg?raw=true)
 
@@ -63,7 +63,7 @@ Totodată am observat că modificarea lui k nu are un impact atât de puternic p
 
 În imagine avem saturația minimă 170 și numărul de binuri fiind 3 (dimensiunea unui bin 60). În comparație cu distribuirea punctelor din primele imagini prezentate (rezultatele antrenării cu valorile: saturație = 0, bin-uri = 180 și distanța euclidiană) se pot observa îmbunătățiri majore în ceea ce privește gruparea punctelor în ambele cazuri.
 
-## 3. Exemplificarea pașilor pe care îi face clasificatorul pentru un caz concret:
+## 3. Exemplificarea pașilor:
 
 Folosind cele mai bune valori rezultate din testele anterioare, vom prezenta toți pașii de clasificare a unei imagini. 
 

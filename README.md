@@ -5,7 +5,7 @@
 > Profesor îndrumător: Vicaș Cristian
 
 ### 1. Descrierea proiectului:
-> Clasificarea, pe bază de histograma dupa culoare, a unor imagini cu sticle/doze de pepsi și cola în catedoria din care fac parte. 
+Clasificarea, pe bază de histograma dupa culoare, a unor imagini cu sticle/doze de pepsi și cola în catedoria din care fac parte. 
 > Implementarea unui clasificator (noi am ales knn). Acesta primeste un set antrenat de poze si o poza de test pe care o clasifică în funcție de hue (culoare) in categoria pepsi sau cola. 
 > La clasificarea după saturație am luat un prag, care poate fi variat pentru a vedea diferențele, deoarece dorim sa luăm în considerare doar culori de roșu și albastru aprins, iar pentru asta e nevoie de un prag mai mare al saturației. 
 > Antrenarea se face cu 340 de poze etichetate (170 cu pepsi si 170 cu cola), iar pentru testare avem 60 de poze (cate 30 din fiecare).

@@ -54,6 +54,7 @@ Având pragul saturației de 170 și numărul de bin-uri de 60 histograma rezult
 ![Histograma](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/Histograma.jpeg?raw=true)
 
 În continuare am arătat, pe graficul rezultat în urma antrenării cu cele mai bune valori găsite, unde este punctul ce reprezintă valoarea imaginii de test.
+
 ![ImagineTestIntegrata](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/ImagineTestIntegrata.jpeg?raw=true)
 
 Am dat zoom pe graficul rezultat înainte pentru a evidenția cele mai apropiate 17 puncte de noul punct adăugat (imaginea de test).

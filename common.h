@@ -46,10 +46,14 @@ int openFolderDlg(char* folderName);
 
 void resizeImg(Mat src, Mat &dst, int maxSize, bool interpolate);
 
-float distance(std::vector<float> point1, std::vector<float> point2);
+float euclidianDistance(std::vector<float> point1, std::vector<float> point2);
+
+float cosineDistance(std::vector<float> point1, std::vector<float> point2);
 
 std::vector<float>  normalizeFromAngle(float angle);
 
 void normalize(std::vector<float>& point);
+
+float len(std::vector<float>& point);
 
 #endif;

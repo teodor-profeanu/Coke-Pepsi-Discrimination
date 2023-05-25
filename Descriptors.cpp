@@ -2,6 +2,17 @@
 
 #include "Descriptors.h"
 
+int _saturationThresh = 100;
+int _samplesPerBin = 1;
+
+void setSaturationThreshold(int saturation) {
+	_saturationThresh = saturation;
+}
+
+void setBins(int bins) {
+	_samplesPerBin = bins;
+}
+
 void showHistogram(const std::string& name, int* hist, const int  hist_cols, const int hist_height)
 {
 	Mat imgHist(hist_height, hist_cols, CV_8UC3, CV_RGB(255, 255, 255)); // constructs a white image
@@ -35,28 +46,18 @@ Mat_<Vec3b> convertBGR2HSV(const Mat &src)
 	Mat_<Vec3b> hsvImg;
 	cvtColor(src, hsvImg, COLOR_BGR2HSV);
 
-	//for (int i = 0; i < height; i++)
-	//{
-	//	for (int j = 0; j < width; j++)
-	//	{
-
-	//		h(i, j) = hsvImg(i, j)[0];
-	//	}
-	//}
-
-	//imshow("hue", h);
 	return hsvImg;
 }
 
 std::vector<int> hirtogramFromHSV(const Mat &src) {
-	std::vector<int> histogram(180, 0);
+	std::vector<int> histogram(180/ _samplesPerBin, 0);
 	Mat_<Vec3b> hImage = convertBGR2HSV(src);
 	int rows = hImage.rows;
 	int cols = hImage.cols;
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			if(hImage(i, j)[1]>100)
-				histogram[hImage(i, j)[0]]++;
+			if(hImage(i, j)[1] > _saturationThresh)
+				histogram[hImage(i, j)[0]/ _samplesPerBin]++;
 		}
 	}
 	
@@ -66,19 +67,17 @@ std::vector<int> hirtogramFromHSV(const Mat &src) {
 }
 
 std::vector<float> hueDescriptor(const Mat &src) {
-	std::vector<int> histogram(180, 0);
-	histogram = hirtogramFromHSV(src);
+	std::vector<int> histogram = hirtogramFromHSV(src);
 	int samples = 0;
 	std::vector<float> sum(2);
-	for (int i = 0; i < 180; i++) {
-		//sumaProduse += i * histogram[i];
-		std::vector<float>  point = normalizeFromAngle(i * 2);
-		sum.at(0) += histogram[i] * point.at(0);
-		sum.at(1) += histogram[i] * point.at(1);
+	for (int i = 0; i < histogram.size(); i++) {
+		std::vector<float>  point = normalizeFromAngle(i * 2 * _samplesPerBin);
+		sum[0] += histogram[i] * point.at(0);
+		sum[1] += histogram[i] * point.at(1);
 		samples += histogram[i];
 	}
-	sum.at(0) /= samples;
-	sum.at(1) /= samples;
+	sum[0] /= samples;
+	sum[1] /= samples;
 
 	normalize(sum);
 

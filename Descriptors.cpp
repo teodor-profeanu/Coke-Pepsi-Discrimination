@@ -50,7 +50,10 @@ Mat_<Vec3b> convertBGR2HSV(const Mat &src)
 }
 
 std::vector<int> hirtogramFromHSV(const Mat &src) {
-	std::vector<int> histogram(180/ _samplesPerBin, 0);
+	int aux = 0;
+	if (180 % _samplesPerBin != 0)
+		aux = 1;
+	std::vector<int> histogram(180/ _samplesPerBin + aux, 0);
 	Mat_<Vec3b> hImage = convertBGR2HSV(src);
 	int rows = hImage.rows;
 	int cols = hImage.cols;
@@ -61,7 +64,11 @@ std::vector<int> hirtogramFromHSV(const Mat &src) {
 		}
 	}
 	
-	//showHistogram("Histograma", &histogram[0], 180, 180);
+	std::ofstream g("histogram.csv");
+	for (int i = 0; i < histogram.size(); i++) {
+		g << i * _samplesPerBin << "," << histogram[i]<<"\n";
+	}
+
 	return histogram;
 	waitKey(0);
 }
@@ -76,10 +83,17 @@ std::vector<float> hueDescriptor(const Mat &src) {
 		sum[1] += histogram[i] * point.at(1);
 		samples += histogram[i];
 	}
+	if (samples == 0) {
+
+		std::cout << "Help"<< histogram.size();
+		exit(1);
+	}
 	sum[0] /= samples;
 	sum[1] /= samples;
 
 	normalize(sum);
+
+	std::cout << sum[0] << " " << sum[1];
 
 	return sum;
 }

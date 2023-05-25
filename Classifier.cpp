@@ -4,11 +4,27 @@
 
 #define folderFileJpg(x,y) (std::string(x) + "/" + std::to_string(y) + ".jpg").c_str()
 
+float (*_distance)(std::vector<float>, std::vector<float>) = euclidianDistance;
+int _sampleSize = 5;
+std::vector<float>(*_func)(const Mat&) = NULL;
+
+void setDistanceFunc(float (*dist)(std::vector<float>, std::vector<float>)) {
+	_distance = dist;
+}
+
+void setSampleSize(int ssize) {
+	_sampleSize = ssize;
+}
+
+void setFunc(std::vector<float>(*f)(const Mat&)) {
+	_func = f;
+}
+
 int size(const Mat &matrix) {
 	return matrix.cols * matrix.rows;
 }
 
-void train(const char* folderName, const char* dstName, int rangeStart, int rangeEnd, char tag, std::vector<float> (*func)(const Mat&), bool append) {
+void train(const char* folderName, const char* dstName, int rangeStart, int rangeEnd, char tag, bool append) {
 	std::ofstream output;
 	if(append)
 		output = std::ofstream(dstName, std::ios_base::app);
@@ -18,7 +34,7 @@ void train(const char* folderName, const char* dstName, int rangeStart, int rang
 
 	for (int i = rangeStart; i <= rangeEnd; i++) {
 		Mat src = imread(folderFileJpg(folderName, i));
-		std::vector<float> point = func(src);
+		std::vector<float> point = _func(src);
 		if (!append && i == rangeStart)
 			output << point.size()<<"\n";
 		output << tag << " " << point[0] << " " << point[1] << "\n";
@@ -48,22 +64,24 @@ std::vector<ClassifiedPoint> readTaggedSet(const char* fileName) {
 	return points;
 }
 
-char knn(std::vector<ClassifiedPoint> pnts, std::vector<float> point, int sampleSize) {
+char knn(std::vector<ClassifiedPoint> pnts, std::vector<float> point) {
 	char freq[27] = {'\0'};
 	std::vector<ClassifiedPoint> points(pnts);
-	for (int i = 0; i < sampleSize; i++) {
+	for (int i = 0; i < _sampleSize; i++) {
 		float minDst = 1e20;
 		int foundIndex = 0;
 		for (int j = 0; j < points.size(); j++) {
-			float dst = distance(points.at(j).point, point);
+			float dst = _distance(points[j].point, point);
 			if (dst < minDst) {
 				minDst = dst;
 				foundIndex = j;
 			}
 		}
-		
-		freq[points.at(foundIndex).tag - 'a']++;
-		points.erase(points.begin() + foundIndex);
+
+		if (minDst < 1e10) {
+			freq[points[foundIndex].tag - 'a']++;
+			points.erase(points.begin() + foundIndex);
+		}
 	}
 
 	int maxFreq = 0;
@@ -78,17 +96,17 @@ char knn(std::vector<ClassifiedPoint> pnts, std::vector<float> point, int sample
 	return finalTag;
 }
 
-char classify(std::vector<ClassifiedPoint> tags, const Mat& src, std::vector<float> (*func)(const Mat&), int sampleSize) {
-	return knn(tags, func(src), sampleSize);
+char classify(std::vector<ClassifiedPoint> tags, const Mat& src) {
+	return knn(tags, _func(src));
 }
 
-void classifyDemo(const char* trainedSet, std::vector<float> (*func)(const Mat&), int sampleSize) {
+void classifyDemo(const char* trainedSet) {
 	char fname[MAX_PATH];
 	std::vector<ClassifiedPoint> points = readTaggedSet(trainedSet);
 	while (openFileDlg(fname)){
 		Mat src = imread(fname);
 
-		char result = classify(points, src, func, sampleSize);
+		char result = classify(points, src);
 		if (result == COLA)
 			std::cout << "Coca Cola";
 		else if(result == PEPSI)
@@ -102,7 +120,7 @@ void classifyDemo(const char* trainedSet, std::vector<float> (*func)(const Mat&)
 	}
 }
 
-void testBatch(const char* trainedSet, std::vector<float> (*func)(const Mat&), int sampleSize, const char* testDir, int rangeStart, int rangeEnd, char expected) {
+void testBatch(const char* trainedSet, const char* testDir, int rangeStart, int rangeEnd, char expected) {
 	std::cout << "\n------------------------\n";
 	if (expected == PEPSI)
 		std::cout << "Testing for PEPSI";
@@ -115,7 +133,7 @@ void testBatch(const char* trainedSet, std::vector<float> (*func)(const Mat&), i
 
 	for (int i = rangeStart; i <= rangeEnd; i++) {
 		Mat src = imread(folderFileJpg(testDir, i));
-		char result = classify(points, src, func, sampleSize);
+		char result = classify(points, src);
 		if (result == expected)
 			positive++;
 		else

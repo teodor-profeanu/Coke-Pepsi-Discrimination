@@ -105,19 +105,39 @@ void resizeImg(Mat src, Mat &dst, int maxSize, bool interpolate)
 		resize(src,dst,sz,0,0,INTER_NEAREST);
 }
 
-float distance(std::vector<float> point1, std::vector<float> point2) {
+float len(std::vector<float>& point) {
+	float result = 0;
+	for (float x : point) {
+		result += x * x;
+	}
+	return sqrt(result);
+}
+
+float euclidianDistance(std::vector<float> point1, std::vector<float> point2) {
 	if (point1.size() != point2.size())
 		return -1;
 
 	float result = 0;
 
 	for (int i = 0; i < point1.size(); i++) {
-		float a = point1.at(i);
-		float b = point2.at(i);
+		float a = point1[i];
+		float b = point2[i];
 		result += (a - b) * (a - b);
 	}
 
 	return sqrt(result);
+}
+
+float cosineDistance(std::vector<float> point1, std::vector<float> point2) {
+	if (point1.size() != point2.size())
+		return -1;
+
+	float dot = 0;
+	for (int i = 0; i < point1.size(); i++) {
+		dot += point1[i] * point2[i];
+	}
+
+	return acos (dot / (len(point1) * len(point2)));
 }
 
 std::vector<float>  normalizeFromAngle(float angle) {
@@ -130,7 +150,8 @@ std::vector<float>  normalizeFromAngle(float angle) {
 }
 
 void normalize(std::vector<float>& point) {
-	float length = sqrt(point.at(0) * point.at(0) + point.at(1) * point.at(1));
-	point.at(0) /= length;
-	point.at(1) /= length;
+	float length = len(point);
+	for (int i = 0; i < point.size(); i++) {
+		point[i] /= length;
+	}
 }

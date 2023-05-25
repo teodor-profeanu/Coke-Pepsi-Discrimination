@@ -12,15 +12,29 @@ int main()
 {
 	cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_FATAL);
 
-	train("images/train/cola", TRAINED_FILE, 30, 199, COLA, hueDescriptor, false);
-	train("images/train/pepsi", TRAINED_FILE, 30, 199, PEPSI, hueDescriptor, true);
+	setDistanceFunc(euclidianDistance);
+	setSaturationThreshold(170);
+	setBins(60);
+	setFunc(hueDescriptor);
+	setSampleSize(17);
 
-	//classifyDemo(TRAINED_FILE, hueDescriptor, 5);
+	//train("images/train/cola", TRAINED_FILE, 30, 199, COLA, false);
+	//train("images/train/pepsi", TRAINED_FILE, 30, 199, PEPSI, true);
 
-	//train("images/test/cola", TRAINED_FILE, 0, 29, COLA, hueDescriptor, false);
-	//train("images/test/pepsi", TRAINED_FILE, 0, 29, PEPSI, hueDescriptor, true);
-	//testBatch(TRAINED_FILE, hueDescriptor, 5, "images/train/cola", 30, 199, COLA);
-	//testBatch(TRAINED_FILE, hueDescriptor, 5, "images/train/pepsi", 30, 199, PEPSI);
+	//testBatch(TRAINED_FILE, "images/test/cola", 0, 29, COLA);
+	//testBatch(TRAINED_FILE, "images/test/pepsi", 0, 29, PEPSI);
+
+	classifyDemo(TRAINED_FILE);
+
+	//plotPoints();
+
+	//changeSampleSize();
+
+	//changeSaturation();
+
+	//changeBins();
+
+	//findBest();
 
 	return 0;
 }

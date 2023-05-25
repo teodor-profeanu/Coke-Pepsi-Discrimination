@@ -50,32 +50,29 @@ Mat_<Vec3b> convertBGR2HSV(const Mat &src)
 }
 
 std::vector<int> hirtogramFromHSV(const Mat &src) {
-<<<<<<< Updated upstream
-	std::vector<int> histogram(180/ _samplesPerBin, 0);
-=======
-	std::vector<int> histogram(18, 0);
->>>>>>> Stashed changes
+	int aux = 0;
+	if (180 % _samplesPerBin != 0)
+		aux = 1;
+	std::vector<int> histogram(180/ _samplesPerBin + aux, 0);
 	Mat_<Vec3b> hImage = convertBGR2HSV(src);
 	int rows = hImage.rows;
 	int cols = hImage.cols;
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-<<<<<<< Updated upstream
 			if(hImage(i, j)[1] > _saturationThresh)
 				histogram[hImage(i, j)[0]/ _samplesPerBin]++;
-=======
-			if(hImage(i, j)[1]>100)
-				histogram[hImage(i, j)[0]/10]++;
->>>>>>> Stashed changes
 		}
 	}
 	
+	std::ofstream g("histogram.csv");
+	for (int i = 0; i < histogram.size(); i++) {
+		g << i * _samplesPerBin << "," << histogram[i]<<"\n";
+	}
 	return histogram;
 	waitKey(0);
 }
 
 std::vector<float> hueDescriptor(const Mat &src) {
-<<<<<<< Updated upstream
 	std::vector<int> histogram = hirtogramFromHSV(src);
 	int samples = 0;
 	std::vector<float> sum(2);
@@ -83,22 +80,19 @@ std::vector<float> hueDescriptor(const Mat &src) {
 		std::vector<float>  point = normalizeFromAngle(i * 2 * _samplesPerBin);
 		sum[0] += histogram[i] * point.at(0);
 		sum[1] += histogram[i] * point.at(1);
-=======
-	std::vector<int> histogram;
-	histogram = hirtogramFromHSV(src);
-	int samples = 0;
-	std::vector<float> sum(2);
-	for (int i = 0; i < histogram.size(); i++) {
-		std::vector<float>  point = normalizeFromAngle(i * 2);
-		sum.at(0) += histogram[i] * point.at(0);
-		sum.at(1) += histogram[i] * point.at(1);
->>>>>>> Stashed changes
 		samples += histogram[i];
+	}
+	if (samples == 0) {
+
+		std::cout << "Help"<< histogram.size();
+		exit(1);
 	}
 	sum[0] /= samples;
 	sum[1] /= samples;
 
 	normalize(sum);
+
+	std::cout << sum[0] << " " << sum[1];
 
 	return sum;
 }

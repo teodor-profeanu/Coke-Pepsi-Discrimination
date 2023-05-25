@@ -13,7 +13,7 @@ void setFunc(std::vector<float>(*f)(const Mat&));
 
 int size(const Mat &matrix);
 
-void train(const char* folderName, const char* dstName, int rangeStart, int rangeEnd, char tag, bool append = false);
+void train(const char* folderName, const char* dstName, int rangeStart, int rangeEnd, char tag, bool append = false, char space = ' ');
 
 std::vector<ClassifiedPoint> readTaggedSet(const char* fileName);
 
@@ -23,6 +23,6 @@ void classifyDemo(const char* trainedSet);
 
 char classify(std::vector<ClassifiedPoint> tags, const Mat& src);
 
-void testBatch(const char* trainedSet, const char* testDir, int rangeStart, int rangeEnd, char expected);
+float testBatch(const char* trainedSet, const char* testDir, int rangeStart, int rangeEnd, char expected);
 
 #endif

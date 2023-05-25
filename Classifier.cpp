@@ -24,7 +24,7 @@ int size(const Mat &matrix) {
 	return matrix.cols * matrix.rows;
 }
 
-void train(const char* folderName, const char* dstName, int rangeStart, int rangeEnd, char tag, bool append) {
+void train(const char* folderName, const char* dstName, int rangeStart, int rangeEnd, char tag, bool append, char space) {
 	std::ofstream output;
 	if(append)
 		output = std::ofstream(dstName, std::ios_base::app);
@@ -37,7 +37,7 @@ void train(const char* folderName, const char* dstName, int rangeStart, int rang
 		std::vector<float> point = _func(src);
 		if (!append && i == rangeStart)
 			output << point.size()<<"\n";
-		output << tag << " " << point[0] << " " << point[1] << "\n";
+		output << tag << space << point[0] << space << point[1] << "\n";
 	}
 	output.close();
 }
@@ -65,6 +65,9 @@ std::vector<ClassifiedPoint> readTaggedSet(const char* fileName) {
 }
 
 char knn(std::vector<ClassifiedPoint> pnts, std::vector<float> point) {
+
+	std::ofstream g("knn.csv");
+
 	char freq[27] = {'\0'};
 	std::vector<ClassifiedPoint> points(pnts);
 	for (int i = 0; i < _sampleSize; i++) {
@@ -80,7 +83,9 @@ char knn(std::vector<ClassifiedPoint> pnts, std::vector<float> point) {
 
 		if (minDst < 1e10) {
 			freq[points[foundIndex].tag - 'a']++;
+			g << points[foundIndex].tag << "," << points[foundIndex].point[0] << "," << points[foundIndex].point[1] << "\n";
 			points.erase(points.begin() + foundIndex);
+			
 		}
 	}
 
@@ -120,7 +125,7 @@ void classifyDemo(const char* trainedSet) {
 	}
 }
 
-void testBatch(const char* trainedSet, const char* testDir, int rangeStart, int rangeEnd, char expected) {
+float testBatch(const char* trainedSet, const char* testDir, int rangeStart, int rangeEnd, char expected) {
 	std::cout << "\n------------------------\n";
 	if (expected == PEPSI)
 		std::cout << "Testing for PEPSI";
@@ -143,4 +148,6 @@ void testBatch(const char* trainedSet, const char* testDir, int rangeStart, int 
 	std::cout << "Positive results: " << positive << "\n";
 	std::cout << "Negative results: " << negative << "\n";
 	std::cout << "Success rate: " << ((float)positive / (positive + negative))*100 << "%\n\n";
+
+	return ((float)positive / (positive + negative)) * 100;
 }

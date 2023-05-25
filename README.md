@@ -1,11 +1,11 @@
-## **_Pepsi vs Cola -- discriminare_**
+# **_Pepsi vs Cola -- discriminare_**
 Procesarea Imaginilor
 Studenți: Teodor Profeanu, Adela Tatar
 Facultatea: Automatică și Calculatoare
 Profesor îndrumător: Vicaș Cristian
 
 
-### 1. Descrierea proiectului:
+## 1. Descrierea proiectului:
 Clasificarea, pe bază de histograma dupa culoare, a unor imagini cu sticle/doze de pepsi și cola în catedoria din care fac parte. 
 Implementarea unui clasificator (noi am ales knn). Acesta primeste un set antrenat de poze si o poza de test pe care o clasifică în funcție de hue (culoare) in categoria pepsi sau cola. 
 La clasificarea după saturație am luat un prag, care poate fi variat pentru a vedea diferențele, deoarece dorim sa luăm în considerare doar culori de roșu și albastru aprins, iar pentru asta e nevoie de un prag mai mare al saturației. 
@@ -14,10 +14,13 @@ Pentru a calula distanța dintre puncte avem două variante, distanța euclidian
 K-ul de la clasificatorul Knn nu este unul fix, ci poate fi variat pentru a vedea diferite rezultate în funcție de numărul de puncte din apropiere cu care este comparată noul punct. 
 Numărul de bin-uri din histogramă poate fi și el variat.
 
-### 2. Testare:
-##### Rezultate antrenare set poze: 
+## 2. Testare:
+Rezultate antrenare set poze: 
+
 ![TrainPepsi](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/TrainPepsi.jpeg?raw=true)
+
 ![TrainCola](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/TrainCola.jpeg?raw=true)
+
 Cele două grafice reprezintă rezultatele în urma antrenării pe setul de poze cu pepsi (albastru) și pe setul de poze cu (cola), în ambele cazuri saturația fiind 0, numărul de bin-uri 1 și distanța euclidiană. Se poate observa că punctele sunt dispersate, doar în anumite zone fiind mai grupate. 
 
 În continuare vom încerca să modificăm valorile care pot fi variate, astfel încât să obținem puncte cât mai grupate, iar performanța clasificatorului să fie cât mai mare.  

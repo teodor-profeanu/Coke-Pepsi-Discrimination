@@ -1,10 +1,7 @@
 ## **_Pepsi vs Cola -- discriminare_**
 Procesarea Imaginilor
-
 Studenți: Teodor Profeanu, Adela Tatar
-
 Facultatea: Automatică și Calculatoare
-
 Profesor îndrumător: Vicaș Cristian
 
 

@@ -20,55 +20,66 @@ Implementarea clasificatorului (noi am ales knn):
 - Numărul de bin-uri din histogramă poate fi și el variat.
 
 ## 2. Testare:
-Rezultate antrenare set poze: 
+### 2.1 Rezultatele după antrenarea inițială: 
 
 ![TrainPepsi](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/TrainPepsi.jpeg?raw=true)
 
 ![TrainCola](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/TrainCola.jpeg?raw=true)
 
-Cele două grafice reprezintă rezultatele în urma antrenării pe setul de poze cu pepsi (albastru) și pe setul de poze cu (cola), în ambele cazuri saturația fiind 0, numărul de bin-uri 1 și distanța euclidiană. Se poate observa că punctele sunt dispersate, doar în anumite zone fiind mai grupate. 
+Cele două grafice reprezintă rezultatele în urma antrenării pe setul de poze cu pepsi (albastru) și pe setul de poze cu cola (roșu), în ambele cazuri saturația minimă fiind 0, numărul de bin-uri 1 și distanța euclidiană. Se poate observa că punctele sunt dispersate, iar zonele grupate au margini foarte neclare.
 
 În continuare vom încerca să modificăm valorile care pot fi variate, astfel încât să obținem puncte cât mai grupate, iar performanța clasificatorului să fie cât mai mare.  
 
-##### Rezultate rată de succes cu varieri ale lui k: 
+### 2.2 Rezultate rată de succes cu varieri ale lui k: 
+
 ![Samples](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/VariationNoSamples.jpeg?raw=true)
+
 În acest grafic am încercat să ilustrăm cum se modifică rata de succes a clasificării, atunci când variem valoarea lui k (valori între 1 si 29, numere impare). Restul parametrilor fiind cei default și anume: distanța euclidiană, pragul saturației este 0 și numărul de bin-uri este 1. 
+
 Se poate observa că, atât pentru cola cât și pentru pepsi, rata maximă de succes este atunci când valoarea lui k este 13. 
 
-##### Rezultate rată de succes cu varieri ale pragului de saturație: 
+### 2.3 Rezultate rată de succes cu varieri ale pragului de saturație: 
+
 ![Saturation](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/VariationSaturation.jpeg?raw=true)
-Luând în considerare rezultatele anterioare, am variat saturația între 0 și 175, păstrând k egal cu 13. Se poate observa că pentru imaginile cu cola valoarea saturației la care s-a obținut rata de succes maximă (100%) a fost 140, iar dupa această valoare rata de succes a fot constantă. Pentru cola, valoarea cea mai bună a saturației este 80, urmând ca pentru restul valorilor să avem o rată de succes constantă (86.6%). 
 
-##### Rezultate rată de succes cu varieri ale numărului de bin-uri: 
+Luând în considerare rezultatele anterioare, am variat saturația între 0 și 175, păstrând k egal cu 13. Se poate observa că pentru imaginile cu cola valoarea saturației minime la care s-a obținut rata de succes maximă (100%) a fost la valorile mai mari de 140. Pentru pepsi, valoarea cea mai bună a saturației începe de la 80, urmând ca pentru restul valorilor să avem o rată de succes constantă (86.6%). Putem deduce că valorile aproape maxime ale saturației au rezultate mai bune.
+
+### 2.4 Rezultate rată de succes cu variația numărului de bin-uri: 
+
 ![Bins](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/VariationBins.jpeg?raw=true)
-Ținând cont de testările anterioare am trecut la a varia valorile bin-urilor, pornind de la 0 până la 90, din 10 în 10. Am păstrat valoarea 13 pentru k și valoarea 150 pentru saturație (acestea erau valorile cele mai bune pentru ambele categorii) și se poate observa că pentru 60 de bin-uri avem rata cea mai bună de succes. 
 
-##### Testări cu varieri multiple a tuturor parametrilor: 
-Ulterior pentru a afla o combinație de valori cât mai bună, am creat o funcție care pentru fiecare dintre cele două distanțe: euclidiană și cosinus, variază pragul saturației între 125 și 175 din 5 în 5, valoarea lui k de la 1 la 29, din doi în doi și valoarea bin-urilor între 5 și 90, din 5 în 5, rezultând 5940 de teste. 
+Ținând cont de testările anterioare am trecut la a varia dimensiunea binurilor hostpgramei, pornind de la 0 până la 90 (de la 180 binuri până la 2), din 10 în 10. Am păstrat valoarea 13 pentru k și valoarea 150 pentru saturație (acestea erau valorile cele mai bune pentru ambele categorii) și se poate observa că pentru dimensiunea 60 a unui bin avem rata cea mai bună de succes (3 binuri/histogramă). 
 
-În urma acestora am obținut cel mai bun procent de 98.33% cu urmatoarele valori: Saturație = 170, K = 3, bins = 60 și distanța euclidiană, iar cel mai mic procent de 58.33% cu valorile: Saturație =0, K = 1, bins = 55 și distanța euclidiana.
+### 2.5 Testări cu variații multiple a tuturor parametrilor: 
+
+Ulterior, pentru a afla cea mai bună combinație de parametrii, am creat o funcție care pentru fiecare dintre cele două distanțe: euclidiană și cosinus, variază pragul saturației între 125 și 175 din 5 în 5, valoarea lui k de la 1 la 29, din doi în doi și valoarea bin-urilor între 5 și 90, din 5 în 5, rezultând 5940 de teste. 
+
+În urma acestora am obținut cel mai bun procent de 98.33% cu următorii parametrii: Saturație = 170, K = 3, bins = 60 și distanța euclidiană, iar cel mai mic procent de 58.33% cu valorile: Saturație = 0, K = 1, bins = 55 și distanța euclidiana.
 
 Totodată am observat că modificarea lui k nu are un impact atât de puternic precum modificarea bin-urilor, așa că în continuare nu vom mai pune atât de mult accent pe valoarea lui k. 
 
-##### Distribuirea punctelor cu cele mai bune valori obținute (saturație = 170, bin-uri = 60):
+### 2.6 Distribuția punctelor cu cele mai bune valori obținute:
+
 ![ColaSaturatie170bins60](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/ColaSaturatie170bins60.jpeg?raw=true)
 ![PepsiSaturatie170bins60](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/PepsiSaturatie170bins60.jpeg?raw=true)
-În comparație cu distribuirea punctelor din primele imagini prezentate (rezultatele antrenării cu valorile: saturație = 0, bin-uri = 1 și distanța euclidiană) se pot observa îmbunătățiri majore în ceea ce privește gruparea punctelor în ambele cazuri.
+
+În imagine avem saturația minimă 170 și numărul de binuri fiind 3 (dimensiunea unui bin 60). În comparație cu distribuirea punctelor din primele imagini prezentate (rezultatele antrenării cu valorile: saturație = 0, bin-uri = 180 și distanța euclidiană) se pot observa îmbunătățiri majore în ceea ce privește gruparea punctelor în ambele cazuri.
 
 ### 3. Exemplificarea pașilor pe care îi face clasificatorul pentru un caz concret:
+
 Folosind cele mai bune valori rezultate din testele anterioare, vom prezenta toți pașii de clasificare a unei imagini. 
 
 ![PepsiImage](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/PepsiImage.jpeg?raw=true)
 
-Având pragul saturației de 170 și numărul de bin-uri de 60 histograma rezultată este următoarea:
+Având pragul saturației de 170 și numărul de bin-uri fiind 3, histograma rezultată este următoarea:
 
 ![Histograma](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/Histograma.jpeg?raw=true)
 
-În continuare am arătat, pe graficul rezultat în urma antrenării cu cele mai bune valori găsite, unde este punctul ce reprezintă valoarea imaginii de test.
+În continuare am arătat unde se încadrează pe grafic imaginea noastră față de cele folosite pentru antrenare:
 
 ![ImagineTestIntegrata](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/ImagineTestIntegrata.jpeg?raw=true)
 
-Am dat zoom pe graficul rezultat înainte pentru a evidenția cele mai apropiate 17 puncte de noul punct adăugat (imaginea de test).
+Am dat zoom pe graficul rezultat înainte pentru a evidenția cele mai apropiate 17 puncte de noul punct adăugat (imaginea de test). 9 dintre ele sunt etichetate "Pepsi" și 8 sunt etichate "Cola". În final clasificatorul ne va spune că în magine apare "Pepsi"
 
 ![Cele17Puncte](https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination/blob/main/graphs/Cele17Puncte.jpeg?raw=true)
 

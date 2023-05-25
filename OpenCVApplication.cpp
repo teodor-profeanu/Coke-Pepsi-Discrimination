@@ -12,12 +12,8 @@ int main()
 {
 	cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_FATAL);
 
-	doesThisWork();
-
-	//train("images/train/cola", TRAINED_FILE, 30, 199, COLA, hueDescriptor, false);
-	//train("images/train/pepsi", TRAINED_FILE, 30, 199, PEPSI, hueDescriptor, true);
-	//testBatch(TRAINED_FILE, hueDescriptor, 9, "images/test/cola", 0, 29, COLA);
-	//testBatch(TRAINED_FILE, hueDescriptor, 9, "images/test/pepsi", 0, 29, PEPSI);
+	train("images/train/cola", TRAINED_FILE, 30, 199, COLA, hueDescriptor, false);
+	train("images/train/pepsi", TRAINED_FILE, 30, 199, PEPSI, hueDescriptor, true);
 
 	//classifyDemo(TRAINED_FILE, hueDescriptor, 5);
 

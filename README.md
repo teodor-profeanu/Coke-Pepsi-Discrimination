@@ -1,18 +1,23 @@
 # **_Pepsi vs Cola -- discriminare_**
 Procesarea Imaginilor
+
 Studenți: Teodor Profeanu, Adela Tatar
+
 Facultatea: Automatică și Calculatoare
+
 Profesor îndrumător: Vicaș Cristian
 
 
 ## 1. Descrierea proiectului:
-Clasificarea, pe bază de histograma dupa culoare, a unor imagini cu sticle/doze de pepsi și cola în catedoria din care fac parte. 
-Implementarea unui clasificator (noi am ales knn). Acesta primeste un set antrenat de poze si o poza de test pe care o clasifică în funcție de hue (culoare) in categoria pepsi sau cola. 
-La clasificarea după saturație am luat un prag, care poate fi variat pentru a vedea diferențele, deoarece dorim sa luăm în considerare doar culori de roșu și albastru aprins, iar pentru asta e nevoie de un prag mai mare al saturației. 
-Antrenarea se face cu 340 de poze etichetate (170 cu pepsi si 170 cu cola), iar pentru testare avem 60 de poze (cate 30 din fiecare).
-Pentru a calula distanța dintre puncte avem două variante, distanța euclidiană și distanța cosinus. 
-K-ul de la clasificatorul Knn nu este unul fix, ci poate fi variat pentru a vedea diferite rezultate în funcție de numărul de puncte din apropiere cu care este comparată noul punct. 
-Numărul de bin-uri din histogramă poate fi și el variat.
+Clasificarea pe bază de histogramă de culoare a unor imagini cu sticle/doze de pepsi și cola în categoria din care fac parte. 
+
+Implementarea clasificatorului (noi am ales knn): 
+- Acesta primește un set antrenat de poze și o poză de test pe care o clasifică în funcție de hue (culoare) în categoria pepsi sau cola. 
+- Antrenarea se face cu 340 de poze etichetate (170 cu pepsi si 170 cu cola), iar pentru testare avem 60 de poze (cate 30 din fiecare).
+- Clasificatorul folosește un prag minim de saturație, pentru a ignora culorile cum ar fi alb sau negru.
+- Pentru a calula distanța dintre puncte avem două variante, distanța euclidiană și distanța cosinus. 
+- K-ul de la clasificatorul Knn nu este unul fix, ci poate fi variat pentru a vedea diferite rezultate în funcție de numărul de puncte din apropiere cu care este comparată noul punct. 
+- Numărul de bin-uri din histogramă poate fi și el variat.
 
 ## 2. Testare:
 Rezultate antrenare set poze: 

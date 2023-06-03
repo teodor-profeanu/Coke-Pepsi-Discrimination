@@ -6,6 +6,8 @@
 >Facultatea: Automatică și Calculatoare
 >
 >Profesor îndrumător: Vicaș Cristian
+>
+> https://github.com/teodor-profeanu/Coke-Pepsi-Discrimination
 
 
 ## 1. Descrierea proiectului:
